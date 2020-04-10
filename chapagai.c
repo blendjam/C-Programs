@@ -19,7 +19,7 @@ int prime(num)
 int main()
 {   
     int n = 1211;
-    int rem,nrem,n1;
+    int rem,n1;
     int count = 0;
     while(n != 0)
     {
@@ -30,7 +30,6 @@ int main()
         //Counting the digits in the remainder
         while(n1 != 0)
         {
-            nrem = n1 % 10;
             n1 /= 10;
             c++;
         }
