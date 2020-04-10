@@ -39,7 +39,7 @@ int main()
         {
             count++;
         }
-        n = (n - (rem % 10))/10;
+        n /= 10;
     }
     printf("The count is %d",count);
 
