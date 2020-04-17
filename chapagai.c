@@ -18,8 +18,8 @@ int prime(num)
 // Main function
 int main()
 {   
-    int n = 71114;
-    int rem,nrem,n1;
+    int n = 1211;
+    int rem,n1;
     int count = 0;
     while(n != 0)
     {
@@ -30,7 +30,6 @@ int main()
         //Counting the digits in the remainder
         while(n1 != 0)
         {
-            nrem = n1 % 10;
             n1 /= 10;
             c++;
         }
@@ -40,7 +39,7 @@ int main()
         {
             count++;
         }
-        n = n/10;
+        n /= 10;
     }
     printf("The count is %d",count);
 
