@@ -18,7 +18,7 @@ int prime(num)
 // Main function
 int main()
 {   
-    int n = 1211;
+    int n = 71114;
     int rem,nrem,n1;
     int count = 0;
     while(n != 0)
@@ -40,7 +40,7 @@ int main()
         {
             count++;
         }
-        n = (n - (rem % 10))/10;
+        n = n/10;
     }
     printf("The count is %d",count);
 
