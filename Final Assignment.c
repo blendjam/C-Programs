@@ -95,7 +95,7 @@ int main()
     //Adding country wise data
     add_country("Nepal", 121, 31, 0);
     add_country("India", 1000, 200, 51);
-    add_country("South America",2000, 10,0);
+    add_country("South Africa",2000, 10,0);
     update_country("Nepal",200,40,12);
     
     // Some variables for user input
