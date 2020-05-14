@@ -36,21 +36,11 @@ country * find_country(char name[longest_name]){
     return temp;
 }
 
-// Update Data of a country
 void update_country(char * name, int new_active, int new_recovered, int new_death){
     country * temp = find_country(name);
     temp->active_cases = new_active;
     temp->recovered = new_recovered;
     temp->deaths = new_death;
-}
-
-// A funciton to print all the cases
-void show_all_cases(country C){
-    int total = C.active_cases + C.deaths + C.recovered;
-    printf("Total Number of cases are: %d\n",total);
-    printf("The Number of active cases are: %d\n",C.active_cases);
-    printf("The Number of recoverd are: %d\n",C.recovered);
-    printf("The Number of deaths are: %d\n", C.deaths);
 }
 
 // A function to print all the active cases
@@ -66,6 +56,15 @@ void show_recovered(country C){
 // A funciton to print all the deaths
 void show_deaths(country C){
     printf("The Number of deaths are: %d\n", C.deaths);
+}
+
+// A funciton to print all the cases
+void show_all_cases(country C){
+    int total = C.active_cases + C.deaths + C.recovered;
+    printf("Total Number of cases are: %d\n",total);
+    show_active_cases(C);
+    show_recovered(C);
+    show_deaths(C);
 }
 
 // Function to show the data according to the user input
@@ -88,12 +87,13 @@ void show(char * user_country, int user_input){
         break;
     default:
         printf("Wrong Input");
-    } 
+    }
 }
 
 void importFile(char * txt){
     char name[longest_name];
-    FILE * fp = fopen("test.txt","r");
+    int index = 0;
+    FILE * fp = fopen("data.txt","r");
 	if(fp == NULL){
 		printf("Error!");
 		return;
@@ -101,26 +101,64 @@ void importFile(char * txt){
 	int active, recovered, death;
 	while(fscanf(fp,"%[^,], %d, %d, %d",name,&active,&recovered, &death)!= EOF){
         fscanf(fp,"%*c");
-		add_country(name,active,recovered,death);
+		country_array[index].active_cases = active;
+		country_array[index].recovered = recovered;
+		country_array[index].deaths = death;
+        strcpy(country_array[index].name, name);
+        index++;
 	}
+    fclose(fp);
 }
+
+void takeInput(){
+    FILE * fp = fopen("data.txt","a");
+    char * name[longest_name];
+    int active, recovered, death;
+    printf("Enter country name: ");
+    scanf(" %[^\n]", name);
+	scanf("%*c");
+    printf("Enter active cases: ");
+    scanf("%d",&active);
+    printf("Enter recovered: ");
+    scanf("%d",&recovered);
+    printf("Enter number of deaths: ");
+    scanf("%d",&death);
+    fprintf(fp,"%s, %d, %d, %d\n", name, active, recovered, death);
+    fclose(fp);
+}
+
 int main()
 {
-    //Adding country wise data to the array
-    importFile("test.txt");
-    
-    // Some variables for user input
-    char user_country[longest_name];
-    int user_input;
+    char Loop = 'y';
+    while (Loop == 'y')
+    {    
+        //Adding country wise data to the array
+        importFile("test.txt");
+        // Prompt for Input or View of data
+        char io;
+        printf("Enter 'I' for input and 'V' to view data:");
+        scanf(" %c",&io);
 
-    //For user input
-    printf("Enter the country name (all small letters): ");
-    scanf("%[^\n]*c",user_country);
-    printf("Enter :\n\t 1 for Active Cases\n\t 2 for Recovered\n\t 3 for Deaths\n\t 4 for all cases: ");
-    scanf("%d",&user_input);
-    
-    // Printing User Requests
-    show(user_country, user_input);
-    
+        if(io == 'I')
+            takeInput();
+        else
+        {
+            // Some variables for user input
+            char user_country[longest_name];
+            int user_input;
+
+            //For user input
+            printf("Enter the country name (First Letter Capital): ");
+            scanf(" %[^\n]",user_country);
+            printf("Enter :\n\t 1 for Active Cases\n\t 2 for Recovered\n\t 3 for Deaths\n\t 4 for all cases: ");
+            scanf("%d",&user_input);
+            
+            // Printing User Requests
+            show(user_country, user_input);
+            
+            printf("Do want to continue? (y/n): ");
+            scanf(" %c",&Loop);
+        }
+    }
     return 0;
 }
