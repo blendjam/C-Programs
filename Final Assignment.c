@@ -14,7 +14,7 @@ typedef struct country{
     int deaths;
 }country;
 
-// A global array of country struct to store all the data related to a country
+// A global array of countries to store all the data related to a country
 country country_array[total_countries];
 
 // A function to add country to the array country_array
@@ -90,25 +90,37 @@ void show(char * user_country, int user_input){
         printf("Wrong Input");
     } 
 }
+
+void importFile(char * txt){
+    char name[longest_name];
+    FILE * fp = fopen("test.txt","r");
+	if(fp == NULL){
+		printf("Error!");
+		return;
+	}
+	int active, recovered, death;
+	while(fscanf(fp,"%[^,], %d, %d, %d",name,&active,&recovered, &death)!= EOF){
+        fscanf(fp,"%*c");
+		add_country(name,active,recovered,death);
+	}
+}
 int main()
 {
-    //Adding country wise data
-    add_country("Nepal", 121, 31, 0);
-    add_country("India", 1000, 200, 51);
-    add_country("South Africa",2000, 10,0);
-    update_country("Nepal",200,40,12);
+    //Adding country wise data to the array
+    importFile("test.txt");
     
     // Some variables for user input
     char user_country[longest_name];
     int user_input;
 
     //For user input
-    printf("Enter the country name (first letter capital): ");
-    scanf("%[^\n]c",user_country);
+    printf("Enter the country name (all small letters): ");
+    scanf("%[^\n]*c",user_country);
     printf("Enter :\n\t 1 for Active Cases\n\t 2 for Recovered\n\t 3 for Deaths\n\t 4 for all cases: ");
     scanf("%d",&user_input);
     
     // Printing User Requests
     show(user_country, user_input);
-
+    
+    return 0;
 }
