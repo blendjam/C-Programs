@@ -95,7 +95,7 @@ void importFile(char * txt){
     int index = 0;
     FILE * fp = fopen("data.txt","r");
 	if(fp == NULL){
-		printf("Error!");
+		printf("Created a file data.txt");
 		return;
 	}
 	int active, recovered, death;
@@ -134,9 +134,10 @@ int main()
     {    
         //Adding country wise data to the array
         importFile("test.txt");
-        // Prompt for Input or View of data
+        
+        // Prompt for Input or View data
         char io;
-        printf("Enter 'I' for input and 'V' to view data:");
+        printf("\nEnter 'I' for input and 'V' to view data: ");
         scanf(" %c",&io);
 
         if(io == 'I')
@@ -156,6 +157,7 @@ int main()
             // Printing User Requests
             show(user_country, user_input);
             
+            // Input if user wants to repeate or not
             printf("Do want to continue? (y/n): ");
             scanf(" %c",&Loop);
         }
