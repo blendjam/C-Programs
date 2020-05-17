@@ -36,13 +36,6 @@ country * find_country(char name[longest_name]){
     return temp;
 }
 
-void update_country(char * name, int new_active, int new_recovered, int new_death){
-    country * temp = find_country(name);
-    temp->active_cases = new_active;
-    temp->recovered = new_recovered;
-    temp->deaths = new_death;
-}
-
 // A function to print all the active cases
 void show_active_cases(country C){
     printf("The Number of active cases are: %d\n",C.active_cases);
